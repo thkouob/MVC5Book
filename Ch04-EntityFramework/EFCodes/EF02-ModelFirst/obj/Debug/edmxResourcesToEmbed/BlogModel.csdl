@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BlogModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
   <EntityContainer Name="BlogModelContainer" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="BlogSet" EntityType="BlogModel.Blog" />
+    <EntitySet Name="Blogs" EntityType="BlogModel.Blog" />
     <EntitySet Name="BlogArticles" EntityType="BlogModel.BlogArticle" />
     <AssociationSet Name="BlogBlogArticle" Association="BlogModel.BlogBlogArticle">
-      <End Role="Blog" EntitySet="BlogSet" />
+      <End Role="Blog" EntitySet="Blogs" />
       <End Role="BlogArticle" EntitySet="BlogArticles" />
     </AssociationSet>
   </EntityContainer>
@@ -33,13 +33,5 @@
   <Association Name="BlogBlogArticle">
     <End Type="BlogModel.Blog" Role="Blog" Multiplicity="1" />
     <End Type="BlogModel.BlogArticle" Role="BlogArticle" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Blog">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="BlogArticle">
-        <PropertyRef Name="BlogId" />
-      </Dependent>
-    </ReferentialConstraint>
   </Association>
 </Schema>

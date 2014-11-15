@@ -1,4 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="BlogModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-  <EntityContainer Name="BlogModelTargetContainer" />
+<Schema Namespace="BlogModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="BlogModelStoreContainer">
+    <EntitySet Name="Blogs" EntityType="BlogModel.Store.Blogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BlogArticles" EntityType="BlogModel.Store.BlogArticles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BlogBlogArticle" Association="BlogModel.Store.BlogBlogArticle">
+      <End Role="Blog" EntitySet="Blogs" />
+      <End Role="BlogArticle" EntitySet="BlogArticles" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Blogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OwnerId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Caption" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BlogArticles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BlogId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Subject" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DateCreated" Type="datetime" Nullable="false" />
+    <Property Name="DateModified" Type="datetime" Nullable="false" />
+    <Property Name="Blog_Id" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <Association Name="BlogBlogArticle">
+    <End Role="Blog" Type="BlogModel.Store.Blogs" Multiplicity="1" />
+    <End Role="BlogArticle" Type="BlogModel.Store.BlogArticles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Blog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BlogArticle">
+        <PropertyRef Name="Blog_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
